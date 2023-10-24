@@ -15,8 +15,9 @@ router.get('/login', url, login);
 router.post('/login', ValidationsLogin, url, processLogin);
 router.get('/logout', url,logout)
 router.put('/hc/delete/:id',loginCheck, url, destroy);
-router.get('/hc/edit/:id', url, edit);
-router.put('/hc/edit/:id',  url,processEdit);
+router.get('/hc/edit/:id', loginCheck, url, edit);
+router.put('/hc/edit/:id', loginCheck,  url,processEdit);
 
 
 module.exports = router;
+ 

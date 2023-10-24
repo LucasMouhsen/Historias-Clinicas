@@ -8,12 +8,10 @@ var logger = require('morgan');
 const session = require('express-session');
 const localUser = require('./middleware/localUser');
 var method = require('method-override');
-
 var indexRouter = require('./routes/index');
-const { log } = require('console');
-
 var app = express();
 
+app.set('trust proxy', true);
 //method-override
 
 app.use(method("_method"))

@@ -5,7 +5,6 @@ let span = document.getElementById("errores-front")
 let boxErrores = document.getElementById("box-errores-front")
 
 
-console.log('llega');
 const userValidation = [
     { validator: value => value.toLowerCase() !== '', message: 'Debe ingresar usuario', index: 0 },
     { validator: value => value.length >= 4 && value.length <= 20, message: 'Credenciales inválidas', index: 1 },

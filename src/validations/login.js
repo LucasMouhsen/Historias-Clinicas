@@ -33,7 +33,6 @@ module.exports = [
         }
       })
         .then(usuario => {
-            console.log(value);
           if (value !== usuario.contraseña) {
             return Promise.reject('Credenciales inválidas');
           }

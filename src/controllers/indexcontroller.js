@@ -8,7 +8,6 @@ const { HistoriasClinicas, Cajas, Personas, Usuarios } = require('../database/mo
 const capitalizarPrimeraLetra = require('../utils/capitalizeOneLetter')
 const obtenerNumeros = require('../utils/obtenerNumero')
 const obtenerFecha = require('../utils/obtenerFecha');
-const { log } = require('console');
 
 module.exports = {
   error: (req, res, next) => {
@@ -63,11 +62,11 @@ module.exports = {
           recordCreated: true
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.status(500).send("Error al crear los registros en la base de datos");
       }
     } else {
-      console.log(errors);
+      console.error(errors);
       return res.render("index", {
         title: "Archivo",
         errors: errors.mapped(),
@@ -116,7 +115,7 @@ module.exports = {
         })
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
 
@@ -130,7 +129,6 @@ module.exports = {
 
     if (errors.isEmpty()) {
       const usuario = req.body.user.trim()
-      console.log(usuario);
       Usuarios.findOne({
         where: {
           usuario
@@ -147,7 +145,7 @@ module.exports = {
           } */
           return res.redirect('/listado')
         })
-        .catch(error => console.log(error))
+        .catch(error => console.error(error))
 
     } else {
       return res.render('login', {
@@ -166,7 +164,7 @@ module.exports = {
       }
     ).then(() => {
       return res.redirect('/listado')
-    }).catch(error => console.log(error))
+    }).catch(error => console.error(error))
   },
   logout: (req, res) => {
     req.session.destroy();
@@ -194,7 +192,7 @@ module.exports = {
         })
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   processEdit: async (req, res) => {
@@ -232,7 +230,7 @@ module.exports = {
         return res.redirect('/hc/' + req.params.id)
       })
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
 
   }
