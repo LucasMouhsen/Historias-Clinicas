@@ -1,4 +1,4 @@
-# Documentación de la aplicación web de historias clínicas físicas
+# Historias clínicas físicas
 
 ¡Bienvenido a la aplicación web de historias clínicas! Esta aplicación web te permite registrar y gestionar historias clínicas en una base de datos. Aquí encontrarás la información necesaria para comprender cómo funciona la aplicación y cómo configurarla en tu entorno local.
 
@@ -47,7 +47,7 @@ Sigue los pasos a continuación para configurar la aplicación web de historias 
 4. Instala las dependencias globales del proyecto utilizando npm (Node Package Manager):
 
    ```
-   npm install -g sequelize
+   npm install sequelize-cli -D
    ```
 
 5. Crea un archivo de entorno `.env` en el directorio raíz del proyecto y configura las variables de entorno necesarias, como la configuración de la base de datos y la clave secreta de sesión. Asegúrate de establecer los valores correctos para tu entorno:
@@ -64,9 +64,9 @@ Sigue los pasos a continuación para configurar la aplicación web de historias 
 6. Crea la base de datos en tu servidor MySQL utilizando Sequelize:
  
     ```
-    sequelize db:create
-    sequelize db:migrate
-    sequelize db:seed:all
+    npx sequelize db:create
+    npx sequelize db:migrate
+    npx sequelize db:seed:all
     ```
 7. Inicia la aplicación web:
 
@@ -74,4 +74,4 @@ Sigue los pasos a continuación para configurar la aplicación web de historias 
    npm start
    ```
 
-8. Accede a la aplicación web en tu navegador a través de la siguiente URL: `http://localhost:3001`.
+8. Accede a la aplicación web en tu navegador a través de la siguiente URL en consola
