@@ -5,15 +5,17 @@ module.exports = [
   check('user')
     .trim()
     .toLowerCase()
-    .notEmpty().withMessage('Debe ingresar usuario')
-    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/).withMessage('Credenciales inválidas')
-    .custom((value, { req }) => {
+    .notEmpty()
+    .withMessage('Debe ingresar usuario')
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/)
+    .withMessage('Credenciales inválidas')
+    .custom((value) => {
       return db.Usuarios.findOne({
         where: {
           usuario: value,
-        }
+        },
       })
-        .then(usuario => {
+        .then((usuario) => {
           if (!usuario) {
             return Promise.reject('Credenciales inválidas');
           }
@@ -24,19 +26,21 @@ module.exports = [
   check('pass')
     .trim()
     .toLowerCase()
-    .notEmpty().withMessage('Debe ingresar contraseña')
-    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/).withMessage('Credenciales inválidas')
+    .notEmpty()
+    .withMessage('Debe ingresar contraseña')
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/)
+    .withMessage('Credenciales inválidas')
     .custom((value, { req }) => {
       return db.Usuarios.findOne({
         where: {
           usuario: req.body.user,
-        }
+        },
       })
-        .then(usuario => {
+        .then((usuario) => {
           if (value !== usuario.contraseña) {
             return Promise.reject('Credenciales inválidas');
           }
         })
         .catch(() => Promise.reject('Credenciales inválidas'));
-    })
+    }),
 ];

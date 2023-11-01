@@ -1,51 +1,45 @@
-const fs = require('fs');
-const path = require('path');
-/* const HistoriasClinicasPath = path.join(__dirname, '../data/HistoriasClinicas.json');
-const HistoriasClinicas = JSON.parse(fs.readFileSync(HistoriasClinicasPath, 'utf-8')); */
-const { validationResult } = require('express-validator');
-
-const { HistoriasClinicas, Cajas, Personas, Usuarios } = require('../database/models');
+const { validationResult } = require('express-validator')
+const { HistoriasClinicas, Cajas, Personas, Usuarios } = require('../database/models')
 const capitalizarPrimeraLetra = require('../utils/capitalizeOneLetter')
 const obtenerNumeros = require('../utils/obtenerNumero')
-const obtenerFecha = require('../utils/obtenerFecha');
+const obtenerFecha = require('../utils/obtenerFecha')
 
 module.exports = {
-  error: (req, res, next) => {
+  error: (req, res,) => {
     if (res.status(404)) {
       res.render('index', {
         mensaje: 'Pagina no enconetrada'
       })
     }
   },
-  index: (req, res, next) => {
-    const errors = validationResult(req);
-    const url = req.url
-    res.render("index", {
-      title: "Archivo",
+  index: (req, res) => {
+    const errors = validationResult(req)
+    res.render('index', {
+      title: 'Archivo',
       errors,
       recordCreated: false,
-      valuesErrors: ""
-    });
+      valuesErrors: ''
+    })
   },
-  addHc: async (req, res, next) => {
-    const errors = validationResult(req);
-    const { hc, firstname, lastAppointment, lastname, box } = req.body;
+  addHc: async (req, res) => {
+    const errors = validationResult(req)
+    const { hc, firstname, lastAppointment, lastname, box } = req.body
     const ultimoRegistro = new Date(lastAppointment)
     if (errors.isEmpty()) {
       try {
         // Obtener el id de la caja
         const caja = await Cajas.create({
           codigoBarras: box.trim()
-        });
-        const cajaId = caja.id;
+        })
+        const cajaId = caja.id
 
         // Obtener el id de la persona
         const persona = await Personas.create({
           nombre: firstname.trim(),
           apellido: lastname.trim(),
           dni: obtenerNumeros(hc)
-        });
-        const personaId = persona.id;
+        })
+        const personaId = persona.id
 
         await HistoriasClinicas.create({
           hc: hc.trim(),
@@ -53,60 +47,58 @@ module.exports = {
           personaId: personaId,
           cajaId: cajaId,
           vigente: 1
-        });
+        })
 
-        return res.render("index", {
-          title: "Archivo",
+        return res.render('index', {
+          title: 'Archivo',
           errors: errors.mapped(),
           req: req.body,
           recordCreated: true
-        });
+        })
       } catch (error) {
-        console.error(error);
-        return res.status(500).send("Error al crear los registros en la base de datos");
+        console.error(error)
+        return res.status(500).send('Error al crear los registros en la base de datos')
       }
     } else {
-      console.error(errors);
-      return res.render("index", {
-        title: "Archivo",
+      console.error(errors)
+      return res.render('index', {
+        title: 'Archivo',
         errors: errors.mapped(),
         req: req.body,
         recordCreated: false
-      });
+      })
     }
   },
   listado: async (req, res) => {
     try {
-      const url = req.url
       const historias = await HistoriasClinicas.findAll({
         include: ['persona', 'caja'],
         order: [['id', 'desc']]
-      });
+      })
       res.render('listado', {
         title: 'Listado',
         historias,
         capitalizarPrimeraLetra,
         obtenerNumeros,
         obtenerFecha
-      });
+      })
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Error al obtener los datos del listado');
+      console.error(error)
+      res.status(500).send('Error al obtener los datos del listado')
     }
   },
-  paciente: async (req, res, next) => {
+  paciente: async (req, res) => {
     try {
-      const errors = validationResult(req);
-      const url = req.url
+      const errors = validationResult(req)
       const paciente = await HistoriasClinicas.findByPk(req.params.id, {
         include: ['persona', 'caja']
-      });
+      })
       if (!paciente || paciente.vigente === 0) {
         res.redirect('/listado')
       } else {
-        /* res.send(paciente); */
-        res.render("paciente", {
-          title: "paciente",
+        /* res.send(paciente) */
+        res.render('paciente', {
+          title: 'paciente',
           errors,
           historia: paciente,
           capitalizarPrimeraLetra,
@@ -115,17 +107,17 @@ module.exports = {
         })
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   },
 
   login: (req, res) => {
-    res.render("login", {
-      title: "Iniciar Sesión"
+    res.render('login', {
+      title: 'Iniciar Sesión'
     })
   },
   processLogin: (req, res) => {
-    let errors = validationResult(req);
+    let errors = validationResult(req)
 
     if (errors.isEmpty()) {
       const usuario = req.body.user.trim()
@@ -139,9 +131,9 @@ module.exports = {
             id: usuario.id,
             usuario: usuario.usuario
           }
-          res.cookie("recordarme", req.session.userLogin, { maxAge: 1000 * 60 })
+          res.cookie('recordarme', req.session.userLogin, { maxAge: 1000 * 60 })
           /* if (recordar) {
-              res.cookie("recordarme", req.session.userLogin, { maxAge: 1000 * 60 })
+              res.cookie('recordarme', req.session.userLogin, { maxAge: 1000 * 60 })
           } */
           return res.redirect('/listado')
         })
@@ -167,22 +159,22 @@ module.exports = {
     }).catch(error => console.error(error))
   },
   logout: (req, res) => {
-    req.session.destroy();
-    res.cookie("recordarme", null, { MaxAge: -1 });
+    req.session.destroy()
+    res.cookie('recordarme', null, { MaxAge: -1 })
     res.redirect('/')
   },
-  edit: async (req, res, next) => {
+  edit: async (req, res) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
       const paciente = await HistoriasClinicas.findByPk(req.params.id, {
         include: ['persona', 'caja']
-      });
+      })
       if (!paciente || paciente.vigente === 0) {
         res.redirect('/listado')
       } else {
-        /* res.send(paciente); */
-        res.render("edit", {
-          title: "Editar",
+        /* res.send(paciente) */
+        res.render('edit', {
+          title: 'Editar',
           errors,
           historia: paciente,
           capitalizarPrimeraLetra,
@@ -192,11 +184,11 @@ module.exports = {
         })
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   },
   processEdit: async (req, res) => {
-    const { hc, firstname, lastname, lastAppointment, box } = req.body 
+    const { hc, firstname, lastname, lastAppointment, box } = req.body
     const ultimoRegistro = new Date(lastAppointment)
     try {
       /* res.send(req.body) */
@@ -226,9 +218,9 @@ module.exports = {
           where: { id: req.params.id }
         }
       )
-      .then(() => {
-        return res.redirect('/hc/' + req.params.id)
-      })
+        .then(() => {
+          return res.redirect('/hc/' + req.params.id)
+        })
     } catch (error) {
       console.error(error)
     }
