@@ -20,7 +20,7 @@ const validationHC2 = [
   { validator: value => value.toLowerCase() !== '', message: 'Debe repetir la historia clínica', index: 5 },
   { validator: value => value.length >= 4 && value.length <= 20, message: 'La historia clínica debe coincidir', index: 5 },
   { validator: value => /^(?=.*[0-9])/.test(value), message: 'La historia clínica debe coincidir', index: 5 },
-  { validator: value => hc.value===value, message:'La historia clínica debe coincidir', index: 5}
+  { validator: value => hc.value === value, message: 'La historia clínica debe coincidir', index: 5 }
 ]
 const validationFirstName = [
   { validator: value => value.toLowerCase() !== '', message: 'El nombre no debe estar vacío', index: 1 },
@@ -68,7 +68,7 @@ hc2.addEventListener('paste', (e) => {
 hc.addEventListener('input', () => {
   validateInput(hc, validationHC)
 })
-hc2.addEventListener('input', () =>{
+hc2.addEventListener('input', () => {
   validateInput(hc2, validationHC2)
 })
 firstname.addEventListener('input', () => {
@@ -121,19 +121,19 @@ form.addEventListener('submit', (event) => {
   }
 
 });
-btnModal.forEach(function(btn) {
-  btn.addEventListener('click', function() {
+btnModal.forEach(function (btn) {
+  btn.addEventListener('click', function () {
     modal.style.display = 'none';
   });
 });
 
-obtenerNumeros= (str) => {
+obtenerNumeros = (str) => {
   const numeros = str.match(/\d+/g);
   return numeros ? numeros.join('') : '';
 };
-hc.addEventListener('blur', () =>{
+hc.addEventListener('blur', () => {
   var ultimosTresNumeros = "";
-  
+
   let value = hc.value.trim();
   let valueNum = obtenerNumeros(value);
   var matches = valueNum.match(/\d{3}$/);

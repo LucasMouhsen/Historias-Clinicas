@@ -3,61 +3,34 @@
   <body class="listado">
     <%- include('./partials/header') %>
       <section>
-
-        <table class="table table-hover">
-          <div class="search-length">
-            <p class="m-0 align-self-center">
-              <% let count = 0; %>
-              <% for(let index = 0; index < historias.length; index++) { %>
-                <% if (historias[index].vigente == 1) { %>
-                   <% count++; %>
-                <% } %>
-              <% } %>
-              Cantidad de registros: <%= count %>
-            </p>
-            
-            
-            <div class="d-flex search">
-              <form id="searchForm">
-                <input id="searchInput" class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-              </form>
-            </div>
+        <div class="container-table">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <table id="datatable_historias" class="table table-hover">
+                <thead>
+                  <tr id="tr">
+                    <th scope="col" class="centered">HISTORIA CLÍNICA</th>
+                    <th scope="col" class="centered">ÚLTIMO REGISTRO</th>
+                    <th scope="col" class="centered">NOMBRE COMPLETO</th>
+                    <th scope="col" class="detail centered"></th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody_historias">
+                </tbody>
+              </table>
           </div>
-          <thead class="">
-            <tr class="form-header">
-              <th scope="col">HISTORIA CLÍNICA</th>
-              <th scope="col">ÚLTIMO REGISTRO</th>
-              <th scope="col">NOMBRE Y APELLIDO</th>
-              <th scope="col" class="detail"></th>
-            </tr>
-          </thead>
-          <tbody id="fila">
-
-            <% historias.forEach(historia=> { %>
-              <% if (historia.vigente === 1) { %>
-                <tr id="tr">
-                  <td id="hc">
-                    <%= historia.hc %>
-                  </td>
-                  <td id="ultimoRegistro">
-                    <%= obtenerFecha(historia.ultimoRegistro) %>
-                  </td>
-                  <td id="persona">
-                    <%= capitalizarPrimeraLetra(historia.persona.nombre) +' '+ capitalizarPrimeraLetra(historia.persona.apellido) %>
-                  </td>
-  
-                  <td scope="row" class="detail">
-                    <a href="/hc/<%= historia.id %>" ><i class="fa-solid fa-circle-info"></i></a>
-                  </td>
-              <% } %>
-                <% }) %>
-              </tr>
-          </tbody>
-        </table>
+        </div>
+        <!-- Bootstrap-->
       </section>
 
+      <!-- jQuery -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <!-- DataTable -->
+      <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+      <!-- custom -->
       <script src="/js/Buscador.js"></script>
       <script src="/js/paraDestruccion.js"></script>
+      <script src="/js/tabla.js"></script>
   </body>
 
   </html>
