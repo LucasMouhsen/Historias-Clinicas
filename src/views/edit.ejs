@@ -6,7 +6,8 @@
       <form action="/hc/edit/<%= historia.id %>?_method=PUT" method="POST" id="form" class="form">
         <section class="form-register ">
           <h4 class="text-center">Editar Historia Clínica</h4>
-          <input class="controls" type="text" name="hc" id="hc" placeholder="HC/DNI" data-index="0" value="<%= historia.hc %>">
+          <input class="controls" type="text" name="hc" id="hc" placeholder="HC/DNI" data-index="0"
+            value="<%= historia.hc %>">
 
           <% if (locals.errors && errors.hc) { %>
             <div class="box-errores-back">
@@ -15,7 +16,8 @@
               </span>
             </div>
             <% } %>
-              <input class="controls" type="text" name="firstname" id="firstname" placeholder="Nombre" data-index="1" value="<%= capitalizarPrimeraLetra(historia.persona.nombre)%>">
+              <input class="controls" type="text" name="firstname" id="firstname" placeholder="Nombre" data-index="1"
+                value="<%= capitalizeLetter(historia.persona.nombre)%>">
 
               <% if (locals.errors && errors.firstname) { %>
                 <div class="box-errores-back">
@@ -25,7 +27,7 @@
                 </div>
                 <% } %>
                   <input class="controls" type="text" name="lastname" id="lastname" placeholder="Apellido"
-                    data-index="2" value="<%= capitalizarPrimeraLetra(historia.persona.apellido)%>">
+                    data-index="2" value="<%= capitalizeLetter(historia.persona.apellido)%>">
 
                   <% if (locals.errors && errors.lastname) { %>
                     <div class="box-errores-back">
@@ -46,7 +48,8 @@
                         </div>
                         <% } %>
                           <input class="controls" type="text" name="box" id="box"
-                            placeholder="Últimos 3 digitos del DNI" data-index="4" value="<%= historia.caja.codigoBarras %>">
+                            placeholder="Últimos 3 digitos del DNI" data-index="4"
+                            value="<%= historia.caja.codigoBarras %>">
 
                           <% if (locals.errors && errors.box) { %>
                             <div class="box-errores-back">
@@ -71,7 +74,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Historia Clínica</h5>
-                <button class="btn" >
+                <button class="btn">
                   <span id="myBtn"><i class="fa-solid fa-xmark"></i></span>
                 </button>
               </div>
@@ -87,21 +90,21 @@
         <% } %>
           <script src="/js/Validations.js"></script>
           <script>
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
               var lastAppointmentInput = document.getElementById('lastAppointment');
               var lastAppointmentValue = '<%= historia.ultimoRegistro %>';
-              
+
               // Convert date format to "yyyy-MM-dd"
               var dateParts = lastAppointmentValue.split(" ");
               var formattedDate = dateParts[3] + "-" + getMonthNumber(dateParts[1]) + "-" + dateParts[2];
-              
+
               lastAppointmentInput.value = formattedDate;
             });
-            
+
             // Function to get month number from month name
             function getMonthNumber(monthName) {
               var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
               return (monthNames.indexOf(monthName) + 1).toString().padStart(2, '0');
             }
           </script>

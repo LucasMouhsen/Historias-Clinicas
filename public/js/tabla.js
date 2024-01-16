@@ -1,4 +1,4 @@
-const capitalizarPalabras = (str) => {
+const capitalizeLetter = (str) => {
     const palabras = str.split(' ');
     const resultado = palabras.map((palabra) => {
         return palabra.charAt(0).toUpperCase() + palabra.slice(1);
@@ -26,7 +26,7 @@ const dataTableOptions = {
     serverSide: true,
     deferRender: true,
     ajax: {
-        url: 'http://172.19.40.21:3001/historias',
+        url: 'http://localhost:3001/historias',
         type: 'get',
     },
     columns: [
@@ -35,10 +35,10 @@ const dataTableOptions = {
         {
             data: 'persona',
             render: (data) => {
-                return capitalizarPalabras(data.nombre) + ' ' + capitalizarPalabras(data.apellido);
+                return capitalizeLetter(data.nombre) + ' ' + capitalizeLetter(data.apellido);
             }
         },
-        { data: null, render: (data) => `<a href="/hc/${data.id}"><i class="fa-solid fa-circle-info"></i></a>` },
+        { data: null, render: (data) => `<a href='/hc/${data.id}'><i class='fa-solid fa-circle-info'></i></a>` },
     ],
     lengthMenu: [10, 20, 50, 100, 200, 500],
     columnDefs: [

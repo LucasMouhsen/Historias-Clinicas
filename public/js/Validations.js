@@ -1,15 +1,15 @@
-let hc = document.getElementById("hc")
-let hc2 = document.getElementById("hc2")
-let firstname = document.getElementById("firstname")
-let lastname = document.getElementById("lastname")
-let lastAppointment = document.getElementById("lastAppointment")
-let box = document.getElementById("box")
-let span = document.getElementById("errores-front")
-let boxErrores = document.getElementById("box-errores-front")
+let hc = document.getElementById('hc')
+let hc2 = document.getElementById('hc2')
+let firstname = document.getElementById('firstname')
+let lastname = document.getElementById('lastname')
+let lastAppointment = document.getElementById('lastAppointment')
+let box = document.getElementById('box')
+let span = document.getElementById('errores-front')
+let boxErrores = document.getElementById('box-errores-front')
 let form = document.getElementById('form');
 /* Modal */
-let modal = document.getElementById("myModal");
-let btnModal = document.querySelectorAll("#myBtn");
+let modal = document.getElementById('myModal');
+let btnModal = document.querySelectorAll('#myBtn');
 
 const validationHC = [
   { validator: value => value.toLowerCase() !== '', message: 'La historia clínica es obligatoria', index: 0 },
@@ -49,12 +49,12 @@ const validateInput = (element, validations) => {
   for (let i = 0; i < validations.length; i++) {
     const validation = validations[i];
     if (!validation.validator(value)) {
-      element.style.border = "1px solid #f04141";
+      element.style.border = '1px solid #f04141';
       return validation.message;
     }
   }
 
-  element.style.border = "1px solid #10dc60";
+  element.style.border = '1px solid #10dc60';
   return '';
 };
 
@@ -94,14 +94,14 @@ form.addEventListener('submit', (event) => {
     for (let i = 0; i < validations.length; i++) {
       const validation = validations[i];
       if (!validation.validator(value)) {
-        element.style.border = "1px solid #f04141";
+        element.style.border = '1px solid #f04141';
         erroresForm[index] = validation.message;
-        boxErrores.style.display = "block";
+        boxErrores.style.display = 'block';
         return;
       }
     }
 
-    element.style.border = "1px solid #10dc60";
+    element.style.border = '1px solid #10dc60';
     delete erroresForm[index];
   };
 
@@ -127,15 +127,15 @@ btnModal.forEach(function (btn) {
   });
 });
 
-obtenerNumeros = (str) => {
+parceNum = (str) => {
   const numeros = str.match(/\d+/g);
   return numeros ? numeros.join('') : '';
 };
 hc.addEventListener('blur', () => {
-  var ultimosTresNumeros = "";
+  var ultimosTresNumeros = '';
 
   let value = hc.value.trim();
-  let valueNum = obtenerNumeros(value);
+  let valueNum = parceNum(value);
   var matches = valueNum.match(/\d{3}$/);
 
   if (matches !== null) {

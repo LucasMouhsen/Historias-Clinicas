@@ -1,8 +1,8 @@
 let user = document.getElementById('user')
 let pass = document.getElementById('pass')
 let form = document.getElementById('form')
-let span = document.getElementById("errores-front")
-let boxErrores = document.getElementById("box-errores-front")
+let span = document.getElementById('errores-front')
+let boxErrores = document.getElementById('box-errores-front')
 
 
 const userValidation = [
@@ -22,12 +22,12 @@ const validateInput = (element, validations) => {
     for (let i = 0; i < validations.length; i++) {
         const validation = validations[i];
         if (!validation.validator(value)) {
-            element.style.border = "1px solid #f04141";
+            element.style.border = '1px solid #f04141';
             return validation.message;
         }
     }
 
-    element.style.border = "1px solid #10dc60";
+    element.style.border = '1px solid #10dc60';
     return '';
 };
 
@@ -47,15 +47,15 @@ form.addEventListener('submit', (event) => {
       for (let i = 0; i < validations.length; i++) {
         const validation = validations[i];
         if (!validation.validator(value)) {
-          element.style.border = "1px solid #f04141";
+          element.style.border = '1px solid #f04141';
           erroresForm[index] = validation.message;
-          boxErrores.style.display = "block";
-          boxErrores.style.textAlign = "center";
+          boxErrores.style.display = 'block';
+          boxErrores.style.textAlign = 'center';
           return;
         }
       }
   
-      element.style.border = "1px solid #10dc60";
+      element.style.border = '1px solid #10dc60';
       delete erroresForm[index];
     };
   

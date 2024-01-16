@@ -1,5 +1,5 @@
 'use strict';
-const usuarios = require("../../Data/usuarios.json");
+const usuarios = require('../../Data/usuarios.json');
 
 function generarDatos() {
   const datosUsuarios = usuarios.map(usuario => ({
