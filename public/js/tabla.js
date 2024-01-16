@@ -26,7 +26,7 @@ const dataTableOptions = {
     serverSide: true,
     deferRender: true,
     ajax: {
-        url: 'http://localhost:3001/historias',
+        url: 'http://172.19.40.21/:3001/historias',
         type: 'get',
     },
     columns: [
