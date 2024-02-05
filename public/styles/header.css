@@ -35,8 +35,9 @@
 }
 @media screen and (min-width: 525px) {
   .header {
+    height: 50px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: end;
     padding: 0 0.75rem;
     align-items: center;
   }
